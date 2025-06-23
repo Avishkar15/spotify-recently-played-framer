@@ -1,9 +1,9 @@
 // Spotify app client ID
-export const ClientId = process.env.NEXT_PUBLIC_CLIENT_ID;
+export const ClientId = 91f23f35fcd945608bcd41a15d8149cb;
 // Vercel app base URL
-export const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+export const BaseUrl = www.avishkarshinde.com;
 // Redirect URI
-export const RedirectUri = process.env.NEXT_PUBLIC_REDIRECT_URI;
+export const RedirectUri = https://localhost:3000/callback;
 
 export const defaultCount = 5;
 export const defaultUniqueTrack = false;
