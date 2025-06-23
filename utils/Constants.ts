@@ -1,7 +1,7 @@
 // Spotify app client ID
 export const ClientId = '91f23f35fcd945608bcd41a15d8149cb';
 // Vercel app base URL
-export const BaseUrl = 'https://localhost:3000/callback';
+export const BaseUrl = 'https://spotify-recently-played-teal.vercel.app';
 // Redirect URI
 export const RedirectUri = 'https://localhost:3000/callback';
 
