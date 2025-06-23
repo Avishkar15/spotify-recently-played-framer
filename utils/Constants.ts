@@ -1,9 +1,9 @@
 // Spotify app client ID
-export const ClientId = '91f23f35fcd945608bcd41a15d8149cb';
+export const ClientId = process.env.NEXT_PUBLIC_CLIENT_ID;
 // Vercel app base URL
-export const BaseUrl = 'https://spotify-recently-played-teal.vercel.app';
+export const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 // Redirect URI
-export const RedirectUri = 'https://localhost:3000/callback';
+export const RedirectUri = process.env.NEXT_PUBLIC_REDIRECT_URI;
 
 export const defaultCount = 5;
 export const defaultUniqueTrack = false;
