@@ -1,7 +1,6 @@
 import { Button, message } from 'antd'
 import {
   CopyOutlined,
-  ReloadOutlined,
   DeleteOutlined,
 } from '@ant-design/icons'
 import Cookie from 'js-cookie'
@@ -10,6 +9,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import SpotifyAuthButton from '../components/SpotifyAuthButton'
 import { ClientId, RedirectUri } from '../utils/Constants'
+import '../styles/dark-theme.css'
 
 function FramerPreview({ userId }: { userId: string }) {
   const [tracks, setTracks] = useState<any[]>([])
@@ -52,7 +52,7 @@ function FramerPreview({ userId }: { userId: string }) {
 }
 
 function getFramerCode(userId: string) {
-  return `// Spotify Recently Played for Framer — Automatic Scroll by X.Avishkar
+  return \`// Spotify Recently Played for Framer — Automatic Scroll by X.Avishkar
 
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -173,7 +173,7 @@ addPropertyControls(SpotifyAutomaticScroll, {
   trackCount: { type: ControlType.Number, title: "Total Tracks", min: 2, max: 20, defaultValue: 10 },
   autoplaySpeed: { type: ControlType.Number, title: "Autoplay Speed", min: 100, max: 10000, defaultValue: 3000 },
 })
-`
+\`
 }
 
 export default function Home() {
@@ -206,11 +206,12 @@ export default function Home() {
         <title>Spotify - Recently Played for Framer</title>
       </Head>
 
+      <h2 style={{ fontSize: 32, fontWeight: 700, marginBottom: 4 }}>Spotify Recently Played for Framer</h2>
+      <p style={{ fontSize: 16, opacity: 0.7, marginBottom: 40 }}>by X.Avishkar</p>
+
       {!currentUser ? (
-        <div style={{ maxWidth: 600, margin: 'auto', marginTop: 80, textAlign: 'center' }}>
-          <h1>Spotify Recently Played- Framer Component</h1>
-          <span>By Avishkar Shinde</span>
-          <h2 style={{ color:white, fontSize: 28, marginBottom: 12 }}>Add Yourself to the App</h2>
+        <div style={{ maxWidth: 600, margin: 'auto', marginTop: 20, textAlign: 'center' }}>
+          <h3 style={{ fontSize: 24, marginBottom: 12 }}>Add Yourself to the App</h3>
           <p style={{ opacity: 0.7, marginBottom: 24 }}>
             Spotify has limited extended quota access to approved apps only. Before authorizing, please fill out this short form so I can add you to my developer list.
           </p>
@@ -219,38 +220,30 @@ export default function Home() {
             href="https://tally.so/r/nWXAoa"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ marginBottom: 32 }}
+            style={{ marginBottom: 32, borderRadius: '9999px' }}
           >
             Fill Form
           </Button>
           <br />
           <div className="auth-btn">
-  <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} />
-</div>
-
+            <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} />
+          </div>
         </div>
       ) : (
-          <h1>Spotify Recently Played- Framer Component</h1>
-          <span>By Avishkar Shinde</span>
-    <h2 style={{ color:white, fontSize: 28, marginBottom: 12 }}>Preview</h2>
-          <p style={{ opacity: 0.7, marginBottom: 24 }}>
         <div>
           <FramerPreview userId={currentUser} />
-
           <div className="code-block">{code}</div>
-
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 24 }}>
             <Button icon={<CopyOutlined />} onClick={handleCopy}>
               Copy
             </Button>
             <div className="auth-btn">
-  <SpotifyAuthButton
-    clientId={ClientId}
-    redirectUri={RedirectUri}
-    label="Re-authorize"
-  />
-</div>
-
+              <SpotifyAuthButton
+                clientId={ClientId}
+                redirectUri={RedirectUri}
+                label="Re-authorize"
+              />
+            </div>
             <Button
               icon={<DeleteOutlined />}
               onClick={handleClearCreds}
