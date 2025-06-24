@@ -15,3 +15,5 @@ export const defaultWidth = 400;
 export const minWidth = 300;
 export const maxWidth = 1000;
 
+
+
