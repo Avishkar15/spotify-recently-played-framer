@@ -1,7 +1,6 @@
-# Spotify Recently Played 
-Display your recently played Spotify tracks on your GitHub profile README. Powered by [Vercel](https://vercel.com).
-
-> Check out [lastfm-recently-played-readme](https://github.com/JeffreyCA/lastfm-recently-played-readme) for a similar integration for Last.fm scrobbles.
+# Spotify Recently Played for Framer
+Display your recently played Spotify tracks on your Framer website. Powered by [Vercel](https://vercel.com).
+Heavyily based on [spotify-recently-played-readme by JefferyCA](https://github.com/JeffreyCA/spotify-recently-played-readme) 
 
 ## Getting Started
 Click the button below to connect your Spotify account with the Vercel app. This is needed to access your recently played tracks.
