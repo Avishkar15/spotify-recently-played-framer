@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getTokensFromFirebase } from '../../utils/FirebaseUtil';
+import { getTokensFromFirebase, writeTokensToFirebase} from '../../utils/FirebaseUtil';
 import { getRecentlyPlayed, getUsername, isValidToken, refreshAccessToken } from '../../utils/SpotifyAuthUtil';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
