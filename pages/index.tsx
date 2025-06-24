@@ -205,19 +205,21 @@ export default function Home() {
         <title>Spotify - Recently Played for Framer</title>
       </Head>
 
-      <h2 style={{ color: '#FFFFFF', fontSize: 32, fontWeight: 700, marginBottom: 4 }}>Spotify Recently Played for Framer</h2>
-      <p style={{ fontSize: 16, opacity: 0.7, marginBottom: 40 }}>by X.Avishkar</p>
+      <h2 style={{ color: '#FFFFFF', fontSize: 36, fontWeight: 700, marginBottom: 4 }}>Spotify Recently Played for Framer</h2>
+      <p style={{ fontSize: 20, opacity: 0.7, marginBottom: 40 }}>by X.Avishkar</p>
 
       {!currentUser ? (
         <div>
-          <h3 style={{ color: '#FFFFFF', fontSize: 24, marginBottom: 12 }}>Add Yourself to the App</h3>
-          <p style={{ opacity: 0.7, marginBottom: 24 }}>
+          <h3 style={{ color: '#FFFFFF', fontSize: 28, marginBottom: 12 }}>Add Yourself to the App</h3>
+          <p style={{ fontSize: 20, opacity: 0.7, marginBottom: 24 }}>
             Spotify has limited extended quota access to Organizations apps only. Before authorizing, please fill out this short form with your 'Spotify Email ID' and add 'Automatic Scroll' in description, so I can add you to my developer list.
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 24 }}>
           <Button
             href="https://tally.so/r/nWXAoa"
-            className="rounded-btn">Fill Form</Button>
+            className="rounded-btn">
+            Fill Form
+          </Button>
           <div className="auth-btn">
             <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} />
           </div>
@@ -225,7 +227,7 @@ export default function Home() {
         </div>
       ) : (
         <div>
-          <h3 style={{ color: '#FFFFFF', fontSize: 24, marginBottom: 12 }}>Automatic Scroll Preview</h3>
+          <h3 style={{ color: '#FFFFFF', fontSize: 28, marginBottom: 12 }}>Automatic Scroll Preview</h3>
           <FramerPreview userId={currentUser} />
           <div className="code-block">{code}</div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 24 }}>
