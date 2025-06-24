@@ -122,6 +122,55 @@ h2, h3, p, span, div, button {
   transform: scale(1.05);
 }
 
+.footer {
+  background: linear-gradient(to top, #0d0d0d, #111);
+  color: white;
+  font-family: 'Satoshi', sans-serif;
+  padding: 60px 40px 40px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-top: 80px;
+}
+
+.footer h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer h4 {
+  opacity: 0.6;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.footer .social-icons {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.footer-credit {
+  margin-top: 60px;
+  font-size: 13px;
+  opacity: 0.5;
+}
+
 
 @keyframes scroll-left {
   0% {
