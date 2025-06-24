@@ -78,7 +78,11 @@ export default function Home(): JSX.Element {
           <TextArea value={markdownText} rows={6} readOnly />
           <Space>
             <Button icon={<CopyOutlined />} onClick={handleCopy}>Copy</Button>
-            <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} label="Re-authorize" icon={<ReloadOutlined />} />
+            <SpotifyAuthButton
+  clientId={ClientId}
+  redirectUri={RedirectUri}
+  label="Re-authorize"
+/>
             <Button type="primary" danger icon={<DeleteOutlined />} onClick={handleClearCreds}>Clear Credentials</Button>
           </Space>
         </Space>
