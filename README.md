@@ -1,4 +1,4 @@
-# Spotify Recently Played README
+# Spotify Recently Played 
 Display your recently played Spotify tracks on your GitHub profile README. Powered by [Vercel](https://vercel.com).
 
 > Check out [lastfm-recently-played-readme](https://github.com/JeffreyCA/lastfm-recently-played-readme) for a similar integration for Last.fm scrobbles.
