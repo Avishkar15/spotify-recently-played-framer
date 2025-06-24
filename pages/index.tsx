@@ -208,7 +208,9 @@ export default function Home() {
 
       {!currentUser ? (
         <div style={{ maxWidth: 600, margin: 'auto', marginTop: 80, textAlign: 'center' }}>
-          <h2 style={{ fontSize: 28, marginBottom: 12 }}>Add Yourself to the App</h2>
+          <h1>Spotify Recently Played- Framer Component</h1>
+          <span>By Avishkar Shinde</span>
+          <h2 style={{ color:white, fontSize: 28, marginBottom: 12 }}>Add Yourself to the App</h2>
           <p style={{ opacity: 0.7, marginBottom: 24 }}>
             Spotify has limited extended quota access to approved apps only. Before authorizing, please fill out this short form so I can add you to my developer list.
           </p>
@@ -228,6 +230,10 @@ export default function Home() {
 
         </div>
       ) : (
+          <h1>Spotify Recently Played- Framer Component</h1>
+          <span>By Avishkar Shinde</span>
+    <h2 style={{ color:white, fontSize: 28, marginBottom: 12 }}>Preview</h2>
+          <p style={{ opacity: 0.7, marginBottom: 24 }}>
         <div>
           <FramerPreview userId={currentUser} />
 
