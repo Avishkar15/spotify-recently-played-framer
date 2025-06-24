@@ -6,7 +6,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import SpotifyAuthButton from '../components/SpotifyAuthButton'
 import { ClientId, RedirectUri } from '../utils/Constants'
-import './dark-theme.css'
 
 const { Text, Title } = Typography
 const { TextArea } = Input
