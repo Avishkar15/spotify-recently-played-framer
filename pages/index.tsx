@@ -226,9 +226,10 @@ export default function Home(): JSX.Element {
       </Head>
 
       <Breadcrumb separator=">" style={{ marginBottom: 25 }}>
-        <Breadcrumb.Item href="/" style={{ color: '#ffffff' }}>
-          Home
-        </Breadcrumb.Item>
+        <Breadcrumb.Item href="/">
+  <span style={{ color: '#ffffff' }}>Home</span>
+</Breadcrumb.Item>
+
       </Breadcrumb>
 
       <Title level={2} style={{ color: '#ffffff' }}>
