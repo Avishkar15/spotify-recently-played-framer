@@ -52,7 +52,7 @@ function FramerPreview({ userId }: { userId: string }) {
 }
 
 function getFramerCode(userId: string) {
-  return \`// Spotify Recently Played for Framer — Automatic Scroll by X.Avishkar
+  return `// Spotify Recently Played for Framer — Automatic Scroll by X.Avishkar
 
 import * as React from "react"
 import { useEffect, useState } from "react"
