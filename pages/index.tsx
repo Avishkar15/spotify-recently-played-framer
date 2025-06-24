@@ -257,14 +257,14 @@ export default function Home() {
     <div className="footer-grid">
       <div>
                     <h4 style={{ color:'#ffffff', opacity:0.7 }}>PAGES</h4>
-                    <p style={{ fontSize: 20, marginBottom: 24 }}><a href="https://www.avishkarshinde.com" target="_blank">Portfolio ↗</a></p>
-                    <p style={{ fontSize: 20, marginBottom: 24 }}><a href="https://www.avishkarshinde.com/aboutme" target="_blank">About Me ↗</a></p>
-                    <p style={{ fontSize: 20, marginBottom: 24 }}><a href="https://drive.google.com/file/d/1GhjKALOvIBptKSYsBtHqlll_P_oiofqq/view?usp=drive_link" target="_blank">Resume ↗</a></p>
+                    <p style={{ fontSize: 20 }}><a href="https://www.avishkarshinde.com" target="_blank">Portfolio ↗</a></p>
+                    <p style={{ fontSize: 20 }}><a href="https://www.avishkarshinde.com/aboutme" target="_blank">About Me ↗</a></p>
+                    <p style={{ fontSize: 20 }}><a href="https://drive.google.com/file/d/1GhjKALOvIBptKSYsBtHqlll_P_oiofqq/view?usp=drive_link" target="_blank">Resume ↗</a></p>
                   </div>
       
       <div>
         <h4 style={{ color:'#ffffff', opacity:0.7 }}>LET'S CONNECT</h4>
-        <p>Send me an email to get in touch, or have a snoop of more work below.</p>
+        <p style={{ fontSize: 20 }}>Send me an email to get in touch, or have a snoop of more work below.</p>
         <div className="social-icons">
                     <a href="mailto:avishkarshinde1501@gmail.com" target="_blank" rel="noopener noreferrer">
                       <img src="https://img.icons8.com/ios-filled/24/ffffff/new-post.png" alt="Email" />
