@@ -230,7 +230,7 @@ export default function Home() {
         </div>
       ) : (
         <div>
-          <h3 style={{ color: white, fontSize: 24, marginBottom: 12 }}>Automatic Scroll Preview</h3>
+          <h3 style={{ color: '#FFFFFF', fontSize: 24, marginBottom: 12 }}>Automatic Scroll Preview</h3>
           <FramerPreview userId={currentUser} />
           <div className="code-block">{code}</div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 24 }}>
