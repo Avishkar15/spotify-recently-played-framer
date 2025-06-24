@@ -1,11 +1,25 @@
-import { Alert, Breadcrumb, Button, Space, Typography, Input, message } from 'antd'
-import { CopyOutlined, UserOutlined, ReloadOutlined, DeleteOutlined } from '@ant-design/icons'
+import {
+  Alert,
+  Breadcrumb,
+  Button,
+  Space,
+  Typography,
+  Input,
+  message,
+} from 'antd'
+import {
+  CopyOutlined,
+  UserOutlined,
+  ReloadOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons'
 import Cookie from 'js-cookie'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import SpotifyAuthButton from '../components/SpotifyAuthButton'
 import { ClientId, RedirectUri } from '../utils/Constants'
+import '../styles/dark-theme.css' // ✅ Make sure this path is correct
 
 const { Text, Title } = Typography
 const { TextArea } = Input
@@ -21,33 +35,38 @@ function FramerPreview({ userId }: { userId: string }) {
   }, [userId])
 
   return (
-  <div className="preview-wrapper">
-    <div className="preview-content">
-      {[...tracks, ...tracks].map((track, i) => (
-        <a
-          key={i}
-          href={`https://open.spotify.com/search/${encodeURIComponent(track.name)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="track-card"
-        >
-          <img
-            src={track.image.replace('ab67616d00004851', 'ab67616d0000b273')}
-            alt={track.name}
-          />
-          <div style={{ fontWeight: 600 }}>{track.name}</div>
-          <div style={{ fontSize: 12, opacity: 0.6 }}>{track.artist}</div>
-          <div style={{ fontSize: 11, opacity: 0.5 }}>
-            {new Date(track.playedAt).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </div>
-        </a>
-      ))}
+    <div className="preview-wrapper">
+      <div className="preview-content">
+        {[...tracks, ...tracks].map((track, i) => (
+          <a
+            key={i}
+            href={`https://open.spotify.com/search/${encodeURIComponent(
+              track.name
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="track-card"
+          >
+            <img
+              src={track.image.replace(
+                'ab67616d00004851',
+                'ab67616d0000b273'
+              )}
+              alt={track.name}
+            />
+            <div style={{ fontWeight: 600 }}>{track.name}</div>
+            <div style={{ fontSize: 12, opacity: 0.6 }}>{track.artist}</div>
+            <div style={{ fontSize: 11, opacity: 0.5 }}>
+              {new Date(track.playedAt).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
-  </div>
-)
+  )
 }
 
 function getFramerCode(userId: string) {
@@ -171,7 +190,8 @@ addPropertyControls(SpotifyAutomaticScroll, {
   artGap: { type: ControlType.Number, title: "Gap between Songs", min: 0, max: 240, defaultValue: 24 },
   trackCount: { type: ControlType.Number, title: "Total Tracks", min: 2, max: 20, defaultValue: 10 },
   autoplaySpeed: { type: ControlType.Number, title: "Autoplay Speed", min: 100, max: 10000, defaultValue: 3000 },
-})`
+})
+`
 }
 
 export default function Home(): JSX.Element {
@@ -206,48 +226,82 @@ export default function Home(): JSX.Element {
       </Head>
 
       <Breadcrumb separator=">" style={{ marginBottom: 25 }}>
-        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+        <Breadcrumb.Item href="/" style={{ color: '#ffffff' }}>
+          Home
+        </Breadcrumb.Item>
       </Breadcrumb>
 
-      <Title level={2}>
+      <Title level={2} style={{ color: '#ffffff' }}>
         <UserOutlined style={{ marginRight: 10 }} />
         Spotify - Recently Played for Framer
       </Title>
+
       {currentUser && (
         <Text type="secondary">Hello, <strong>{currentUser}</strong>!</Text>
       )}
-      {error && <Alert message="Error" description={error} type="error" style={{ marginTop: 12 }} />}
+      {error && (
+        <Alert message="Error" description={error} type="error" style={{ marginTop: 12 }} />
+      )}
 
       {!currentUser ? (
         <Space direction="vertical" size="middle" style={{ marginTop: 24 }}>
-  <Text type="warning">
-    Before authorizing, please fill out this short form. Spotify now limits "Extended Quota"
-    to verified organizations only — I need to manually add you to my app.
-  </Text>
-  <Button
-    type="default"
-    href="https://tally.so/r/nWXAoa"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    Fill Out Form
-  </Button>
-
-  <Text>Then, authorize your Spotify account below:</Text>
-  <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} />
-</Space>
+          <Text type="warning">
+            Before authorizing, please fill out this short form. Spotify now limits "Extended Quota"
+            to verified organizations only — I need to manually add you to my app.
+          </Text>
+          <Button
+            type="default"
+            href="https://tally.so/r/nWXAoa"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ borderRadius: 9999, padding: '0 20px', height: 40 }}
+          >
+            Fill Out Form
+          </Button>
+          <Text>Then, authorize your Spotify account below:</Text>
+          <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} />
+        </Space>
       ) : (
         <Space direction="vertical" size="large" style={{ width: '100%', marginTop: 24 }}>
-          <Text strong>Preview:</Text>
+          <Text strong style={{ color: '#eaeaea' }}>Preview:</Text>
           <FramerPreview userId={currentUser} />
 
-          <Text strong>Framer Component Code:</Text>
-          <TextArea value={code} rows={32} readOnly style={{ fontFamily: 'monospace' }} />
+          <Text strong style={{ color: '#eaeaea' }}>Framer Component Code:</Text>
+          <TextArea
+            value={code}
+            rows={32}
+            readOnly
+            style={{
+              fontFamily: 'monospace',
+              backgroundColor: '#111827',
+              color: '#e5e7eb',
+              borderRadius: 12,
+              border: '1px solid #3b82f6',
+              boxShadow: '0 0 8px rgba(59, 130, 246, 0.3)',
+            }}
+          />
 
           <Space>
-            <Button icon={<CopyOutlined />} onClick={handleCopy}>Copy</Button>
-            <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} label="Re-authorize" />
-            <Button type="primary" danger icon={<DeleteOutlined />} onClick={handleClearCreds}>Clear Credentials</Button>
+            <Button icon={<CopyOutlined />} onClick={handleCopy}>
+              Copy
+            </Button>
+            <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} label="Re-authorize"/>
+            <Button
+              icon={<DeleteOutlined />}
+              onClick={handleClearCreds}
+              style={{
+                backgroundColor: '#ef4444',
+                border: 'none',
+                color: '#fff',
+                fontWeight: 'bold',
+                borderRadius: 9999,
+                padding: '0 20px',
+                height: 40,
+                boxShadow: '0 0 10px rgba(239, 68, 68, 0.4)',
+              }}
+            >
+              Clear Credentials
+            </Button>
           </Space>
         </Space>
       )}
