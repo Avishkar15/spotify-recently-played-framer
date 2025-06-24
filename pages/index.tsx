@@ -1,15 +1,6 @@
-import {
-  Alert,
-  Breadcrumb,
-  Button,
-  Space,
-  Typography,
-  Input,
-  message,
-} from 'antd'
+import { Button, message } from 'antd'
 import {
   CopyOutlined,
-  UserOutlined,
   ReloadOutlined,
   DeleteOutlined,
 } from '@ant-design/icons'
@@ -19,9 +10,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import SpotifyAuthButton from '../components/SpotifyAuthButton'
 import { ClientId, RedirectUri } from '../utils/Constants'
-
-const { Text, Title } = Typography
-const { TextArea } = Input
 
 function FramerPreview({ userId }: { userId: string }) {
   const [tracks, setTracks] = useState<any[]>([])
@@ -39,18 +27,13 @@ function FramerPreview({ userId }: { userId: string }) {
         {[...tracks, ...tracks].map((track, i) => (
           <a
             key={i}
-            href={`https://open.spotify.com/search/${encodeURIComponent(
-              track.name
-            )}`}
+            href={`https://open.spotify.com/search/${encodeURIComponent(track.name)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="track-card"
           >
             <img
-              src={track.image.replace(
-                'ab67616d00004851',
-                'ab67616d0000b273'
-              )}
+              src={track.image.replace('ab67616d00004851', 'ab67616d0000b273')}
               alt={track.name}
             />
             <div style={{ fontWeight: 600 }}>{track.name}</div>
@@ -181,7 +164,7 @@ export function SpotifyAutomaticScroll({
 
 addPropertyControls(SpotifyAutomaticScroll, {
   textColor: { type: ControlType.Color, title: "Text Color", defaultValue: "#111" },
-  font: { type: ControlType.String, title: "Font", defaultValue: "Inter, sans-serif" },
+  font: { type: ControlType.String, title: "Font", defaultValue: "Satoshi, sans-serif" },
   nameSize: { type: ControlType.Number, title: "Track Text", min: 10, max: 28, defaultValue: 16 },
   artistSize: { type: ControlType.Number, title: "Artist Text", min: 8, max: 24, defaultValue: 12 },
   timeSize: { type: ControlType.Number, title: "Time Text", min: 8, max: 20, defaultValue: 11 },
@@ -193,7 +176,7 @@ addPropertyControls(SpotifyAutomaticScroll, {
 `
 }
 
-export default function Home(): JSX.Element {
+export default function Home() {
   const router = useRouter()
   const [currentUser, setCurrentUser] = useState<string | undefined>(undefined)
   const [code, setCode] = useState<string>('')
@@ -218,92 +201,54 @@ export default function Home(): JSX.Element {
   }
 
   return (
-    <div style={{ padding: 30, maxWidth: 960, margin: 'auto' }}>
+    <div className="container">
       <Head>
         <title>Spotify - Recently Played for Framer</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Breadcrumb separator=">" style={{ marginBottom: 25 }}>
-        <Breadcrumb.Item href="/">
-  <span style={{ color: '#ffffff' }}>Home</span>
-</Breadcrumb.Item>
-
-      </Breadcrumb>
-
-      <Title level={2} style={{ color: '#ffffff' }}>
-        <UserOutlined style={{ marginRight: 10 }} />
-        Spotify - Recently Played for Framer
-      </Title>
-
-      {currentUser && (
-        <Text type="secondary">Hello, <strong>{currentUser}</strong>!</Text>
-      )}
-      {error && (
-        <Alert message="Error" description={error} type="error" style={{ marginTop: 12 }} />
-      )}
-
       {!currentUser ? (
-        <Space direction="vertical" size="middle" style={{ marginTop: 24 }}>
-          <Text type="warning">
-            Before authorizing, please fill out this short form. Spotify now limits "Extended Quota"
-            to verified organizations only — I need to manually add you to my app.
-          </Text>
+        <div style={{ maxWidth: 600, margin: 'auto', marginTop: 80, textAlign: 'center' }}>
+          <h2 style={{ fontSize: 28, marginBottom: 12 }}>Add Yourself to the App</h2>
+          <p style={{ opacity: 0.7, marginBottom: 24 }}>
+            Spotify has limited extended quota access to approved apps only. Before authorizing, please fill out this short form so I can add you to my developer list.
+          </p>
           <Button
             type="default"
             href="https://tally.so/r/nWXAoa"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ borderRadius: 9999, padding: '0 20px', height: 40 }}
+            style={{ marginBottom: 32 }}
           >
-            Fill Out Form
+            Fill Form
           </Button>
-          <Text>Then, authorize your Spotify account below:</Text>
-          <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} />
-        </Space>
+          <br />
+          <SpotifyAuthButton className="auth-btn" clientId={ClientId} redirectUri={RedirectUri} />
+        </div>
       ) : (
-        <Space direction="vertical" size="large" style={{ width: '100%', marginTop: 24 }}>
-          <Text strong style={{ color: '#eaeaea' }}>Preview:</Text>
+        <div>
           <FramerPreview userId={currentUser} />
 
-          <Text strong style={{ color: '#eaeaea' }}>Framer Component Code:</Text>
-          <TextArea
-            value={code}
-            rows={32}
-            readOnly
-            style={{
-              fontFamily: 'monospace',
-              backgroundColor: '#111827',
-              color: '#e5e7eb',
-              borderRadius: 12,
-              border: '1px solid #3b82f6',
-              boxShadow: '0 0 8px rgba(59, 130, 246, 0.3)',
-            }}
-          />
+          <div className="code-block">{code}</div>
 
-          <Space>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 24 }}>
             <Button icon={<CopyOutlined />} onClick={handleCopy}>
               Copy
             </Button>
-            <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} label="Re-authorize"/>
+            <SpotifyAuthButton
+              className="auth-btn"
+              clientId={ClientId}
+              redirectUri={RedirectUri}
+              label="Re-authorize"
+            />
             <Button
               icon={<DeleteOutlined />}
               onClick={handleClearCreds}
-              style={{
-                backgroundColor: '#ef4444',
-                border: 'none',
-                color: '#fff',
-                fontWeight: 'bold',
-                borderRadius: 9999,
-                padding: '0 20px',
-                height: 40,
-                boxShadow: '0 0 10px rgba(239, 68, 68, 0.4)',
-              }}
+              className="clear-btn"
             >
               Clear Credentials
             </Button>
-          </Space>
-        </Space>
+          </div>
+        </div>
       )}
     </div>
   )
