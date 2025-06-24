@@ -252,5 +252,38 @@ export default function Home() {
         </div>
       )}
     </div>
+    <footer className="footer">
+  <h2>👋 Thanks for stopping by! Want to see more?</h2>
+  <div className="footer-grid">
+    <div>
+      <h4>PAGES</h4>
+      <p><a href="https://www.avishkarshinde.com" target="_blank">Portfolio ↗</a></p>
+      <p><a href="https://www.avishkarshinde.com/aboutme" target="_blank">About Me ↗</a></p>
+      <p><a href="https://drive.google.com/file/d/1GhjKALOvIBptKSYsBtHqlll_P_oiofqq/view?usp=drive_link" target="_blank">Resume ↗</a></p>
+    </div>
+      <h4>LET'S CONNECT</h4>
+      <p>Send me an email to get in touch, or have a snoop of more work below.</p>
+      <div className="social-icons">
+        <a href="mailto:avishkarshinde1501@gmail.com" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.icons8.com/ios-filled/24/ffffff/new-post.png" alt="Email" />
+        </a>
+        <a href="https://www.linkedin.com/in/xavishkar/" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.icons8.com/ios-filled/24/ffffff/linkedin.png" alt="LinkedIn" />
+        </a>
+        <a href="https://www.youtube.com/@x.avishkar" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.icons8.com/ios-filled/24/ffffff/youtube-play.png" alt="YouTube" />
+        </a>
+        <a href="https://www.instagram.com/x.avishkar" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.icons8.com/ios-filled/24/ffffff/instagram-new.png" alt="Instagram" />
+        </a>
+        <a href="https://github.com/Avishkar15" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.icons8.com/ios-filled/24/ffffff/github.png" alt="GitHub" />
+        </a>
+      </div>
+    </div>
+  </div>
+  <p className="footer-credit">© 2025 Designed by <i>Avishkar</i></p>
+</footer>
+
   )
 }
