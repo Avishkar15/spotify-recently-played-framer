@@ -6,12 +6,10 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import SpotifyAuthButton from '../components/SpotifyAuthButton'
 import { ClientId, RedirectUri } from '../utils/Constants'
-import { motion } from 'framer-motion'
 
 const { Text, Title } = Typography
 const { TextArea } = Input
 
-// Animated preview with time, name, artist
 function FramerPreview({ userId }: { userId: string }) {
   const [tracks, setTracks] = useState<any[]>([])
 
@@ -23,56 +21,80 @@ function FramerPreview({ userId }: { userId: string }) {
   }, [userId])
 
   return (
-    <div style={{ display: 'flex', gap: 24, overflowX: 'auto', padding: '16px 0' }}>
-      {tracks.map((track, i) => (
-        <motion.a
-          key={i}
-          href={`https://open.spotify.com/search/${encodeURIComponent(track.name)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.05 }}
-          style={{
-            minWidth: 160,
-            flexShrink: 0,
-            textDecoration: 'none',
-            color: '#111',
-            textAlign: 'center',
-          }}
-        >
-          <motion.img
-            src={track.image.replace('ab67616d00004851', 'ab67616d0000b273')}
-            alt={track.name}
+    <div
+      style={{
+        overflow: 'hidden',
+        width: '100%',
+        whiteSpace: 'nowrap',
+        padding: '12px 0',
+        border: '1px solid #eee',
+        borderRadius: 8,
+      }}
+    >
+      <div
+        style={{
+          display: 'inline-flex',
+          gap: 24,
+          animation: 'scrollLeft 60s linear infinite',
+        }}
+      >
+        {tracks.map((track, i) => (
+          <a
+            key={i}
+            href={`https://open.spotify.com/search/${encodeURIComponent(track.name)}`}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
-              width: 160,
-              height: 160,
-              borderRadius: 12,
-              objectFit: 'cover',
-              marginBottom: 8,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              minWidth: 160,
+              flexShrink: 0,
+              textDecoration: 'none',
+              color: '#111',
+              textAlign: 'center',
             }}
-            whileHover={{ scale: 1.08 }}
-          />
-          <div style={{ fontWeight: 600 }}>{track.name}</div>
-          <div style={{ fontSize: 12, opacity: 0.6 }}>{track.artist}</div>
-          <div style={{ fontSize: 11, opacity: 0.5 }}>
-            {new Date(track.playedAt).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </div>
-        </motion.a>
-      ))}
+          >
+            <img
+              src={track.image.replace('ab67616d00004851', 'ab67616d0000b273')}
+              alt={track.name}
+              style={{
+                width: 160,
+                height: 160,
+                borderRadius: 12,
+                objectFit: 'cover',
+                marginBottom: 8,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              }}
+            />
+            <div style={{ fontWeight: 600 }}>{track.name}</div>
+            <div style={{ fontSize: 12, opacity: 0.6 }}>{track.artist}</div>
+            <div style={{ fontSize: 11, opacity: 0.5 }}>
+              {new Date(track.playedAt).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <style jsx>{`
+        @keyframes scrollLeft {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+      `}</style>
     </div>
   )
 }
 
-// Full Framer component code
 function getFramerCode(userId: string) {
   return `// Spotify Recently Played for Framer — Automatic Scroll by X.Avishkar
 
 import * as React from "react"
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
 import { addPropertyControls, ControlType } from "framer"
 
 export function SpotifyAutomaticScroll({
@@ -127,7 +149,7 @@ export function SpotifyAutomaticScroll({
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <motion.div
+      <div
         style={{
           display: "flex",
           gap: artGap,
@@ -137,12 +159,11 @@ export function SpotifyAutomaticScroll({
         }}
       >
         {tracks.map((track, i) => (
-          <motion.a
+          <a
             key={i}
             href={\`https://open.spotify.com/search/\${encodeURIComponent(track.name)}\`}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
             style={{
               textDecoration: "none",
               color: textColor,
@@ -152,11 +173,6 @@ export function SpotifyAutomaticScroll({
               width: artSize,
               transition: "all 0.3s ease",
               filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.15))",
-            }}
-            whileTap={{ scale: 0.98 }}
-            whileHover={{
-              scale: 1.07,
-              filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.25)) brightness(1.1)",
             }}
           >
             <img
@@ -178,9 +194,9 @@ export function SpotifyAutomaticScroll({
                 minute: "2-digit",
               })}
             </div>
-          </motion.a>
+          </a>
         ))}
-      </motion.div>
+      </div>
     </div>
   )
 }
@@ -195,8 +211,7 @@ addPropertyControls(SpotifyAutomaticScroll, {
   artGap: { type: ControlType.Number, title: "Gap between Songs", min: 0, max: 240, defaultValue: 24 },
   trackCount: { type: ControlType.Number, title: "Total Tracks", min: 2, max: 20, defaultValue: 10 },
   autoplaySpeed: { type: ControlType.Number, title: "Autoplay Speed", min: 100, max: 10000, defaultValue: 3000 },
-})
-`
+})`
 }
 
 export default function Home(): JSX.Element {
@@ -245,9 +260,22 @@ export default function Home(): JSX.Element {
 
       {!currentUser ? (
         <Space direction="vertical" size="middle" style={{ marginTop: 24 }}>
-          <Text>Get started by authorizing the app below.</Text>
-          <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} />
-        </Space>
+  <Text type="warning">
+    Before authorizing, please fill out this short form. Spotify now limits "Extended Quota"
+    to verified organizations only — I need to manually add you to my app.
+  </Text>
+  <Button
+    type="default"
+    href="https://tally.so/r/nWXAoa"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Fill Out Form
+  </Button>
+
+  <Text>Then, authorize your Spotify account below:</Text>
+  <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} />
+</Space>
       ) : (
         <Space direction="vertical" size="large" style={{ width: '100%', marginTop: 24 }}>
           <Text strong>Preview:</Text>
@@ -258,7 +286,7 @@ export default function Home(): JSX.Element {
 
           <Space>
             <Button icon={<CopyOutlined />} onClick={handleCopy}>Copy</Button>
-            <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} label="Re-authorize"} />
+            <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} label="Re-authorize" />
             <Button type="primary" danger icon={<DeleteOutlined />} onClick={handleClearCreds}>Clear Credentials</Button>
           </Space>
         </Space>
