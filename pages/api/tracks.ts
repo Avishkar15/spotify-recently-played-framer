@@ -3,6 +3,7 @@ import { getTokensFromFirebase, writeTokensToFirebase} from '../../utils/Firebas
 import { getRecentlyPlayed, getUsername, isValidToken, refreshAccessToken } from '../../utils/SpotifyAuthUtil';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
     const user = req.query.user as string;
 
     if (!user) {
