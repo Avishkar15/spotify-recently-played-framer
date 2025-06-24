@@ -251,8 +251,7 @@ export default function Home() {
           </div>
         </div>
       )}
-    </div>
-    <footer className="footer">
+      <footer className="footer">
   <h2>👋 Thanks for stopping by! Want to see more?</h2>
   <div className="footer-grid">
     <div>
@@ -284,6 +283,8 @@ export default function Home() {
   </div>
   <p className="footer-credit">© 2025 Designed by <i>Avishkar</i></p>
 </footer>
+    </div>
+    
 
   )
 }
