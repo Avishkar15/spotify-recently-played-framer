@@ -209,7 +209,7 @@ export default function Home() {
       <p style={{ fontSize: 16, opacity: 0.7, marginBottom: 40 }}>by X.Avishkar</p>
 
       {!currentUser ? (
-        <div style={{ maxWidth: 600, margin: 'auto', marginTop: 20 }}>
+        <div>
           <h3 style={{ color: '#FFFFFF', fontSize: 24, marginBottom: 12 }}>Add Yourself to the App</h3>
           <p style={{ opacity: 0.7, marginBottom: 24 }}>
             Spotify has limited extended quota access to Organizations apps only. Before authorizing, please fill out this short form with your 'Spotify Email ID' and add 'Automatic Scroll' in description, so I can add you to my developer list.
@@ -217,11 +217,7 @@ export default function Home() {
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 24 }}>
           <Button
             href="https://tally.so/r/nWXAoa"
-            className="rounded-btn"
-          >
-            Fill Form
-          </Button>
-          <br />
+            className="rounded-btn">Fill Form</Button>
           <div className="auth-btn">
             <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} />
           </div>
