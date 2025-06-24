@@ -86,3 +86,21 @@ body {
     transform: translateX(-50%);
   }
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Satoshi:wght@400;600;700&display=swap');
+
+body {
+  background-color: #0f0f0f;
+  color: #eaeaea;
+  font-family: 'Satoshi', sans-serif;
+}
+
+button, .ant-btn {
+  transition: all 0.2s ease;
+  transform: scale(1);
+}
+
+button:hover, .ant-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+}
