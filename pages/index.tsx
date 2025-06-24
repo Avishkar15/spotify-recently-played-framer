@@ -222,7 +222,10 @@ export default function Home() {
             Fill Form
           </Button>
           <br />
-          <SpotifyAuthButton className="auth-btn" clientId={ClientId} redirectUri={RedirectUri} />
+          <div className="auth-btn">
+  <SpotifyAuthButton clientId={ClientId} redirectUri={RedirectUri} />
+</div>
+
         </div>
       ) : (
         <div>
