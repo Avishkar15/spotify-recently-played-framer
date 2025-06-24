@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import SpotifyAuthButton from '../components/SpotifyAuthButton'
 import { ClientId, RedirectUri } from '../utils/Constants'
-import '../styles/dark-theme.css'
 
 function FramerPreview({ userId }: { userId: string }) {
   const [tracks, setTracks] = useState<any[]>([])
