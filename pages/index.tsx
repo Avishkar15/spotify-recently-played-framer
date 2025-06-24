@@ -173,7 +173,7 @@ addPropertyControls(SpotifyAutomaticScroll, {
   trackCount: { type: ControlType.Number, title: "Total Tracks", min: 2, max: 20, defaultValue: 10 },
   autoplaySpeed: { type: ControlType.Number, title: "Autoplay Speed", min: 100, max: 10000, defaultValue: 3000 },
 })
-\`
+`
 }
 
 export default function Home() {
