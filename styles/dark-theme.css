@@ -110,13 +110,20 @@ h2, h3, p, span, div, button {
 /* Add to dark-theme.css */
 
 .rounded-btn {
-  border-radius: 9999px !important;
-  height: 44px !important;
-  padding: 0 24px !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
   font-weight: 600;
-  font-family: 'Satoshi', sans-serif !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  padding: 0 24px !important;
+  height: 44px !important;
+  line-height: 44px !important; /* Matches button height */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   transition: all 0.2s ease-in-out;
 }
+
 
 .rounded-btn:hover {
   transform: scale(1.05);
