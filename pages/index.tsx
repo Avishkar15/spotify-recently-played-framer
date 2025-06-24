@@ -205,12 +205,12 @@ export default function Home() {
         <title>Spotify - Recently Played for Framer</title>
       </Head>
 
-      <h2 style={{ fontSize: 32, fontWeight: 700, marginBottom: 4 }}>Spotify Recently Played for Framer</h2>
+      <h2 style={{ color: white, fontSize: 32, fontWeight: 700, marginBottom: 4 }}>Spotify Recently Played for Framer</h2>
       <p style={{ fontSize: 16, opacity: 0.7, marginBottom: 40 }}>by X.Avishkar</p>
 
       {!currentUser ? (
         <div style={{ maxWidth: 600, margin: 'auto', marginTop: 20, textAlign: 'center' }}>
-          <h3 style={{ fontSize: 24, marginBottom: 12 }}>Add Yourself to the App</h3>
+          <h3 style={{ color: white, fontSize: 24, marginBottom: 12 }}>Add Yourself to the App</h3>
           <p style={{ opacity: 0.7, marginBottom: 24 }}>
             Spotify has limited extended quota access to approved apps only. Before authorizing, please fill out this short form so I can add you to my developer list.
           </p>
@@ -219,7 +219,7 @@ export default function Home() {
             href="https://tally.so/r/nWXAoa"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ marginBottom: 32, borderRadius: '9999px' }}
+            className="rounded-btn"
           >
             Fill Form
           </Button>
@@ -230,10 +230,11 @@ export default function Home() {
         </div>
       ) : (
         <div>
+          <h3 style={{ color: white, fontSize: 24, marginBottom: 12 }}>Automatic Scroll Preview</h3>
           <FramerPreview userId={currentUser} />
           <div className="code-block">{code}</div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 24 }}>
-            <Button icon={<CopyOutlined />} onClick={handleCopy}>
+            <Button icon={<CopyOutlined />} onClick={handleCopy} className="rounded-btn">
               Copy
             </Button>
             <div className="auth-btn">
@@ -246,7 +247,7 @@ export default function Home() {
             <Button
               icon={<DeleteOutlined />}
               onClick={handleClearCreds}
-              className="clear-btn"
+              className="clear-btn rounded-btn"
             >
               Clear Credentials
             </Button>
