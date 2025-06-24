@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import SpotifyAuthButton from '../components/SpotifyAuthButton'
 import { ClientId, RedirectUri } from '../utils/Constants'
+import './dark-theme.css'
 
 const { Text, Title } = Typography
 const { TextArea } = Input
@@ -21,73 +22,33 @@ function FramerPreview({ userId }: { userId: string }) {
   }, [userId])
 
   return (
-    <div
-      style={{
-        overflow: 'hidden',
-        width: '100%',
-        whiteSpace: 'nowrap',
-        padding: '12px 0',
-        border: '1px solid #eee',
-        borderRadius: 8,
-      }}
-    >
-      <div
-        style={{
-          display: 'inline-flex',
-          gap: 24,
-          animation: 'scrollLeft 60s linear infinite',
-        }}
-      >
-        {tracks.map((track, i) => (
-          <a
-            key={i}
-            href={`https://open.spotify.com/search/${encodeURIComponent(track.name)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              minWidth: 160,
-              flexShrink: 0,
-              textDecoration: 'none',
-              color: '#111',
-              textAlign: 'center',
-            }}
-          >
-            <img
-              src={track.image.replace('ab67616d00004851', 'ab67616d0000b273')}
-              alt={track.name}
-              style={{
-                width: 160,
-                height: 160,
-                borderRadius: 12,
-                objectFit: 'cover',
-                marginBottom: 8,
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-              }}
-            />
-            <div style={{ fontWeight: 600 }}>{track.name}</div>
-            <div style={{ fontSize: 12, opacity: 0.6 }}>{track.artist}</div>
-            <div style={{ fontSize: 11, opacity: 0.5 }}>
-              {new Date(track.playedAt).toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </div>
-          </a>
-        ))}
-      </div>
-
-      <style jsx>{`
-        @keyframes scrollLeft {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-      `}</style>
+  <div className="preview-wrapper">
+    <div className="preview-content">
+      {[...tracks, ...tracks].map((track, i) => (
+        <a
+          key={i}
+          href={`https://open.spotify.com/search/${encodeURIComponent(track.name)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="track-card"
+        >
+          <img
+            src={track.image.replace('ab67616d00004851', 'ab67616d0000b273')}
+            alt={track.name}
+          />
+          <div style={{ fontWeight: 600 }}>{track.name}</div>
+          <div style={{ fontSize: 12, opacity: 0.6 }}>{track.artist}</div>
+          <div style={{ fontSize: 11, opacity: 0.5 }}>
+            {new Date(track.playedAt).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </div>
+        </a>
+      ))}
     </div>
-  )
+  </div>
+)
 }
 
 function getFramerCode(userId: string) {
