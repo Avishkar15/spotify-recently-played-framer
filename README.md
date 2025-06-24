@@ -21,7 +21,7 @@ After granting permission, just add the following into my Framer Code below and 
 ```md
 https://spotify-recently-played-teal.vercel.app/api/tracks?user=userid
 ```
-### Framer Code for 
+### Framer Code for AutomaticSlider
 ```sh
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -214,7 +214,7 @@ addPropertyControls(SpotifySlide, {
 ```
 
 ## Deploying own Vercel instance
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2FJeffreyCA%2Fspotify-recently-played-readme&env=NEXT_PUBLIC_CLIENT_ID,NEXT_PUBLIC_BASE_URL,NEXT_PUBLIC_REDIRECT_URI,CLIENT_SECRET,FIREBASE_PROJECT_ID,FIREBASE_PRIVATE_KEY_B64,FIREBASE_CLIENT_EMAIL)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2FAvishkar15%2Fspotify-recently-played-framer&env=NEXT_PUBLIC_CLIENT_ID,NEXT_PUBLIC_BASE_URL,NEXT_PUBLIC_REDIRECT_URI,CLIENT_SECRET,FIREBASE_PROJECT_ID,FIREBASE_PRIVATE_KEY_B64,FIREBASE_CLIENT_EMAIL)
 
 Deploy your own Vercel instance using the link above. Next, set the following environment variables:
 
@@ -233,7 +233,7 @@ Deploy your own Vercel instance using the link above. Next, set the following en
 ## Running locally
 1. Clone Git repo
     ```sh
-    $ git clone https://github.com/JeffreyCA/spotify-recently-played-readme.git
+    $ git clone https://github.com/Avishkar15/spotify-recently-played-framer.git
     ```
 2. Install Node dependencies
     ```sh
@@ -258,11 +258,6 @@ Deploy your own Vercel instance using the link above. Next, set the following en
 
 The app will be running at [http://localhost:3000](http://localhost:3000).
 
-## Common issues
-### Widget fails to load on GitHub
-Sometimes you may encounter an issue where the widget fails to load on GitHub, with a 502 response from `camo.githubusercontent.com`. This is because GitHub proxies images and will timeout requests if they take too long. Long request times are usually a result of Firebase database **cold starts**, which can take up to several seconds ([known issue](https://issuetracker.google.com/issues/158014637)).
-
-As a workaround, there's an endpoint at `/api/warmup?key=<WARMUP_KEY>` which accepts a GET request with a single query parameter `key`. If it matches the environment variable `WARMUP_KEY`, then it will go ahead and issue a simple database read request to Firebase to keep it *warm*. For your own Vercel instance, you can setup a simple cron job to ping the endpoint every few minutes or so to prevent cold starts. I already do this with the hosted Vercel instance.
 
 This is a bit of a hacky workaround and may not 100% eliminate the issue. If you have any better solutions or have general optimizations feel free to create a PR!
 
