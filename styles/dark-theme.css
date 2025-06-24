@@ -107,6 +107,22 @@ h2, h3, p, span, div, button {
   position: relative;
 }
 
+/* Add to dark-theme.css */
+
+.rounded-btn {
+  border-radius: 9999px !important;
+  height: 44px !important;
+  padding: 0 24px !important;
+  font-weight: 600;
+  font-family: 'Satoshi', sans-serif !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.rounded-btn:hover {
+  transform: scale(1.05);
+}
+
+
 @keyframes scroll-left {
   0% {
     transform: translateX(0%);
