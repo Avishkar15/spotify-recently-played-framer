@@ -205,12 +205,12 @@ export default function Home() {
         <title>Spotify - Recently Played for Framer</title>
       </Head>
 
-      <h2 style={{ color: white, fontSize: 32, fontWeight: 700, marginBottom: 4 }}>Spotify Recently Played for Framer</h2>
+      <h2 style={{ color: #FFFFFF, fontSize: 32, fontWeight: 700, marginBottom: 4 }}>Spotify Recently Played for Framer</h2>
       <p style={{ fontSize: 16, opacity: 0.7, marginBottom: 40 }}>by X.Avishkar</p>
 
       {!currentUser ? (
         <div style={{ maxWidth: 600, margin: 'auto', marginTop: 20, textAlign: 'center' }}>
-          <h3 style={{ color: white, fontSize: 24, marginBottom: 12 }}>Add Yourself to the App</h3>
+          <h3 style={{ color: #FFFFFF, fontSize: 24, marginBottom: 12 }}>Add Yourself to the App</h3>
           <p style={{ opacity: 0.7, marginBottom: 24 }}>
             Spotify has limited extended quota access to approved apps only. Before authorizing, please fill out this short form so I can add you to my developer list.
           </p>
