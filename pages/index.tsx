@@ -237,12 +237,14 @@ export default function Home() {
             <Button icon={<CopyOutlined />} onClick={handleCopy}>
               Copy
             </Button>
-            <SpotifyAuthButton
-              className="auth-btn"
-              clientId={ClientId}
-              redirectUri={RedirectUri}
-              label="Re-authorize"
-            />
+            <div className="auth-btn">
+  <SpotifyAuthButton
+    clientId={ClientId}
+    redirectUri={RedirectUri}
+    label="Re-authorize"
+  />
+</div>
+
             <Button
               icon={<DeleteOutlined />}
               onClick={handleClearCreds}
