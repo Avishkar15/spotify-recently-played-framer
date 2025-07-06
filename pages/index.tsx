@@ -52,7 +52,6 @@ function FramerPreview({ userId }: { userId: string }) {
 
 function getFramerCode(userId: string) {
   return `// Spotify Recently Played for Framer — Automatic Scroll by X.Avishkar
-// Final Spotify Track Carousel for Framer — Continuous Scroll, Depth & Glow on Hover with Smooth Fade + Mobile Tweaks
 
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -64,10 +63,10 @@ function getTimeAgo(playedAt) {
     const minutes = Math.floor(diff / 60000)
 
     if (minutes < 1) return "Just now"
-    if (minutes < 60) return "${minutes} minute${minutes === 1 ? "" : "s"} ago"
+    if (minutes < 60) return `${minutes} minute${minutes === 1 ? "" : "s"} ago`
 
     const hours = Math.floor(minutes / 60)
-    return "${hours} hour${hours === 1 ? "" : "s"} ago"
+    return `${hours} hour${hours === 1 ? "" : "s"} ago`
 }
 
 function fadeStyle(side, fadeColor) {
@@ -81,8 +80,8 @@ function fadeStyle(side, fadeColor) {
         zIndex: 2,
         background:
             side === "left"
-                ? "linear-gradient(to right, ${fadeColor} 60%, transparent)"
-                : "linear-gradient(to left, ${fadeColor} 60%, transparent)",
+                ? `linear-gradient(to right, ${fadeColor} 60%, transparent)`
+                : `linear-gradient(to left, ${fadeColor} 60%, transparent)`,
     }
 }
 
@@ -166,7 +165,7 @@ export function SpotifyCarousel({
                 style={{
                     display: "flex",
                     gap: 24,
-                    transform: "translateX(-${scrollOffset}px)",
+                    transform: `translateX(-${scrollOffset}px)`,
                     transition: "transform 0.1s linear",
                     width: "max-content",
                 }}
@@ -177,7 +176,7 @@ export function SpotifyCarousel({
                     return (
                         <motion.a
                             key={i}
-                            href={"https://open.spotify.com/search/${encodeURIComponent(track.name)}"}
+                            href={`https://open.spotify.com/search/${encodeURIComponent(track.name)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onMouseEnter={() => setHoveredIndex(i)}
