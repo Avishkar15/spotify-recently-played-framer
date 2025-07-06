@@ -52,126 +52,289 @@ function FramerPreview({ userId }: { userId: string }) {
 
 function getFramerCode(userId: string) {
   return `// Spotify Recently Played for Framer — Automatic Scroll by X.Avishkar
+// Final Spotify Track Carousel for Framer — Continuous Scroll, Depth & Glow on Hover with Smooth Fade + Mobile Tweaks
 
 import * as React from "react"
 import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 import { addPropertyControls, ControlType } from "framer"
 
-export function SpotifyAutomaticScroll({
-  textColor,
-  font,
-  nameSize,
-  artistSize,
-  timeSize,
-  artSize,
-  artGap,
-  trackCount,
-  autoplaySpeed,
-}) {
-  const [tracks, setTracks] = useState([])
-  const [scrollPos, setScrollPos] = useState(0)
-  const [paused, setPaused] = useState(false)
+function getTimeAgo(playedAt) {
+    const diff = Date.now() - new Date(playedAt).getTime()
+    const minutes = Math.floor(diff / 60000)
 
-  useEffect(() => {
-    fetch("https://spotify-recently-played-teal.vercel.app/api/tracks?user=${userId}")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.tracks)
-          setTracks([
-            ...data.tracks.slice(0, trackCount),
-            ...data.tracks.slice(0, trackCount),
-          ])
-      })
-      .catch(() => {})
-  }, [trackCount])
+    if (minutes < 1) return "Just now"
+    if (minutes < 60) return `${minutes} minute${minutes === 1 ? "" : "s"} ago`
 
-  useEffect(() => {
-    if (paused || tracks.length === 0) return
-    const id = setInterval(() => {
-      setScrollPos((prev) => (prev + 1) % (tracks.length * artSize))
-    }, autoplaySpeed / 100)
-    return () => clearInterval(id)
-  }, [paused, autoplaySpeed, tracks, artSize])
-
-  if (!tracks.length)
-    return <div style={{ padding: 16, fontFamily: font, color: textColor }}>Loading...</div>
-
-  return (
-    <div
-      style={{
-        width: "100%",
-        overflow: "hidden",
-        fontFamily: font,
-        color: textColor,
-        position: "relative",
-        padding: 16,
-      }}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <div
-        style={{
-          display: "flex",
-          gap: artGap,
-          transform: \`translateX(-\${scrollPos}px)\`,
-          transition: "transform 0.5s linear",
-          width: "max-content",
-        }}
-      >
-        {tracks.map((track, i) => (
-          <a
-            key={i}
-            href={\`https://open.spotify.com/search/\${encodeURIComponent(track.name)}\`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              textDecoration: "none",
-              color: textColor,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              width: artSize,
-              transition: "all 0.3s ease",
-              filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.15))",
-            }}
-          >
-            <img
-              src={track.image.replace("ab67616d00004851", "ab67616d0000b273")}
-              alt={track.name}
-              style={{
-                width: artSize,
-                height: artSize,
-                borderRadius: 12,
-                objectFit: "cover",
-                marginBottom: 8,
-              }}
-            />
-            <div style={{ fontWeight: 600, fontSize: nameSize }}>{track.name}</div>
-            <div style={{ fontSize: artistSize, opacity: 0.7 }}>{track.artist}</div>
-            <div style={{ fontSize: timeSize, opacity: 0.5 }}>
-              {new Date(track.playedAt).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  )
+    const hours = Math.floor(minutes / 60)
+    return `${hours} hour${hours === 1 ? "" : "s"} ago`
 }
 
-addPropertyControls(SpotifyAutomaticScroll, {
-  textColor: { type: ControlType.Color, title: "Text Color", defaultValue: "#111" },
-  font: { type: ControlType.String, title: "Font", defaultValue: "Satoshi, sans-serif" },
-  nameSize: { type: ControlType.Number, title: "Track Text", min: 10, max: 28, defaultValue: 16 },
-  artistSize: { type: ControlType.Number, title: "Artist Text", min: 8, max: 24, defaultValue: 12 },
-  timeSize: { type: ControlType.Number, title: "Time Text", min: 8, max: 20, defaultValue: 11 },
-  artSize: { type: ControlType.Number, title: "Album Size", min: 60, max: 240, defaultValue: 160 },
-  artGap: { type: ControlType.Number, title: "Gap between Songs", min: 0, max: 240, defaultValue: 24 },
-  trackCount: { type: ControlType.Number, title: "Total Tracks", min: 2, max: 20, defaultValue: 10 },
-  autoplaySpeed: { type: ControlType.Number, title: "Autoplay Speed", min: 100, max: 10000, defaultValue: 3000 },
+function fadeStyle(side, fadeColor) {
+    return {
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        [side]: 0,
+        width: 48,
+        pointerEvents: "none",
+        zIndex: 2,
+        background:
+            side === "left"
+                ? `linear-gradient(to right, ${fadeColor} 60%, transparent)`
+                : `linear-gradient(to left, ${fadeColor} 60%, transparent)`,
+    }
+}
+
+export function SpotifyCarousel({
+    textColor,
+    font,
+    nameSize,
+    artistSize,
+    timeSize,
+    artSize,
+    trackCount,
+    autoplaySpeed,
+    fadeColor,
+    cardsPerFrame,
+    fadeEdges,
+}) {
+    const [tracks, setTracks] = useState([])
+    const [scrollPos, setScrollPos] = useState(0)
+    const [paused, setPaused] = useState(false)
+    const [hoveredIndex, setHoveredIndex] = useState(null)
+    const [scrollOffset, setScrollOffset] = useState(0)
+
+    useEffect(() => {
+        fetch(
+            "https://spotify-recently-played-teal.vercel.app/api/tracks?user=${userId}"
+        )
+            .then((res) => res.json())
+            .then((data) => {
+                if (data?.tracks)
+                    setTracks([
+                        ...data.tracks.slice(0, trackCount),
+                        ...data.tracks.slice(0, trackCount),
+                    ])
+            })
+            .catch(() => {})
+    }, [trackCount])
+
+    useEffect(() => {
+        if (paused || tracks.length === 0) return
+        const frameWidth = cardsPerFrame * (artSize + 24) // album size + gap
+        const totalWidth = tracks.length * (artSize + 24)
+
+        const id = setInterval(() => {
+            setScrollOffset((prev) => {
+                const next = prev + 1
+                return next >= totalWidth / 2 ? 0 : next // Reset when halfway
+            })
+        }, autoplaySpeed) // ~60fps
+
+        return () => clearInterval(id)
+    }, [autoplaySpeed, paused, tracks, artSize, cardsPerFrame])
+
+    if (!tracks.length)
+        return (
+            <div style={{ padding: 16, fontFamily: font, color: textColor }}>
+                Loading...
+            </div>
+        )
+
+    return (
+        <div
+            style={{
+                width: "100%",
+                overflow: "hidden",
+                fontFamily: font,
+                color: textColor,
+                position: "relative",
+                padding: 16,
+            }}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+        >
+            {fadeEdges && (
+                <>
+                    <div style={fadeStyle("left", fadeColor)} />
+                    <div style={fadeStyle("right", fadeColor)} />
+                </>
+            )}
+
+            <motion.div
+                style={{
+                    display: "flex",
+                    gap: 24,
+                    transform: "translateX(-${scrollOffset}px)",
+                    transition: "transform 0.1s linear",
+                    width: "max-content",
+                }}
+            >
+                {tracks.map((track, i) => {
+                    const isFocused =
+                        hoveredIndex === null || hoveredIndex === i
+                    return (
+                        <motion.a
+                            key={i}
+                            href={"https://open.spotify.com/search/${encodeURIComponent(track.name)}"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onMouseEnter={() => setHoveredIndex(i)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                            style={{
+                                textDecoration: "none",
+                                color: textColor,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                width: artSize,
+                                minWidth: artSize,
+                                padding: 8,
+                            }}
+                            animate={{
+                                opacity: isFocused ? 1 : 0.3,
+                                filter: isFocused
+                                    ? "drop-shadow(0 4px 14px rgba(0,0,0,0.3)) brightness(1.08)"
+                                    : "brightness(0.5)",
+                                scale: isFocused ? 1.05 : 0.92,
+                            }}
+                            transition={{
+                                duration: 0.25,
+                                ease: [0.25, 0.1, 0.25, 1],
+                            }}
+                            whileTap={{ scale: 0.97 }}
+                        >
+                            <motion.img
+                                src={track.image.replace(
+                                    "ab67616d00004851",
+                                    "ab67616d0000b273"
+                                )}
+                                alt={track.name}
+                                style={{
+                                    width: "100%",
+                                    height: artSize,
+                                    borderRadius: 12,
+                                    objectFit: "cover",
+                                    marginBottom: 8,
+                                }}
+                                initial={{ opacity: 0 }}
+                                animate={{
+                                    opacity: 1,
+                                    transition: {
+                                        duration: 0.3,
+                                        ease: "easeInOut",
+                                    },
+                                }}
+                            />
+                            <div
+                                style={{
+                                    fontWeight: 600,
+                                    fontSize: nameSize,
+                                    textAlign: "center",
+                                }}
+                            >
+                                {track.name}
+                            </div>
+                            <div
+                                style={{
+                                    fontSize: artistSize,
+                                    opacity: 0.7,
+                                    textAlign: "center",
+                                }}
+                            >
+                                {track.artist}
+                            </div>
+                            <div
+                                style={{
+                                    fontSize: timeSize,
+                                    opacity: 0.5,
+                                    textAlign: "center",
+                                }}
+                            >
+                                {getTimeAgo(track.playedAt)}
+                            </div>
+                        </motion.a>
+                    )
+                })}
+            </motion.div>
+        </div>
+    )
+}
+
+addPropertyControls(SpotifyCarousel, {
+    textColor: {
+        type: ControlType.Color,
+        title: "Text Color",
+        defaultValue: "#111",
+    },
+    font: {
+        type: ControlType.String,
+        title: "Font",
+        defaultValue: "Inter, sans-serif",
+    },
+    nameSize: {
+        type: ControlType.Number,
+        title: "Track Text",
+        min: 10,
+        max: 28,
+        defaultValue: 16,
+    },
+    artistSize: {
+        type: ControlType.Number,
+        title: "Artist Text",
+        min: 8,
+        max: 24,
+        defaultValue: 12,
+    },
+    timeSize: {
+        type: ControlType.Number,
+        title: "Time Text",
+        min: 8,
+        max: 20,
+        defaultValue: 11,
+    },
+    artSize: {
+        type: ControlType.Number,
+        title: "Album Size",
+        min: 60,
+        max: 240,
+        defaultValue: 160,
+    },
+    trackCount: {
+        type: ControlType.Number,
+        title: "Total Tracks",
+        min: 2,
+        max: 20,
+        defaultValue: 10,
+    },
+    autoplaySpeed: {
+        type: ControlType.Number,
+        title: "Autoplay Speed",
+        min: 4,
+        max: 32,
+        defaultValue: 24,
+    },
+
+    cardsPerFrame: {
+        type: ControlType.Number,
+        title: "Cards/Frame",
+        min: 1,
+        max: 6,
+        defaultValue: 3,
+    },
+    fadeEdges: {
+        type: ControlType.Boolean,
+        title: "Fade Edges",
+        defaultValue: true,
+    },
+    fadeColor: {
+        type: ControlType.Color,
+        title: "Arrow Color",
+        defaultValue: "#000",
+    },
 })
+
 `
 }
 
