@@ -390,6 +390,9 @@ export default function Home() {
         <div>
           <h3 style={{ color: '#FFFFFF', fontSize: 28, marginBottom: 12 }}>Automatic Scroll Preview</h3>
           <FramerPreview userId={currentUser} />
+          <p style={{ fontSize: 20, opacity: 0.7, marginBottom: 24 }}>
+            SCreate a code component in Framer called 'SpotifyCarousel' and paste the code below in it.
+          </p>
           <div className="code-block">{code}</div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 24 }}>
             <Button icon={<CopyOutlined />} onClick={handleCopy} className="rounded-btn">
